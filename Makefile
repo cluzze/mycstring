@@ -21,5 +21,8 @@ cstring.o: cstring.h cstring.cpp
 myapp: main.o cstring.o
 	$(CC) $(CFLAGS) -o $@ $^ -lm
 
+getline: getline.c
+	$(CC) $(CFLAGS) -o $@ $^
+
 clean:
-	rm myapp *.o *.gch
+	rm myapp getline *.o *.gch

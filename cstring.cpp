@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 #define TABLE_SIZE 256
-#define BUF_SIZE 16
+#define BUF_SIZE 160000
 
 void *memcpy(void *dest, const void *src, size_t n)
 {
@@ -91,18 +91,7 @@ char *strcat(char *dest, const char *src)
 	assert(dest);
 	assert(src);
 
-	size_t i = 0;
-	size_t j = 0;
-
-	for (i = 0; dest[i] != '\0'; ++i)
-		;
-
-	for (j = 0; src[j] != '\0'; ++j, ++i)
-	{
-		dest[i] = src[j];
-	}
-
-	dest[i] = '\0';
+	strcpy(dest + strlen(dest), src);
 
 	return dest;
 }
@@ -346,8 +335,6 @@ char *_fgets(char *s, int size, FILE *stream)
 
 	str       = s;
 
-	fprintf(stdin, "hi\n");
-
 	if (size - 1 > 0)
 		fscanf(stream, "%c", &c);
 
@@ -373,12 +360,12 @@ int _fputs(const char *s, FILE *stream)
 	return ferror(stream) ? EOF : 228;
 }
 
+
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 {
-	assert(n);
+	//assert(n);
 
-	ssize_t size = 0;
-	char buf[BUF_SIZE] = {'\0'};
+	/*char buf[BUF_SIZE] = {'\0'};
 
 	if (!*lineptr)
 	{
@@ -392,21 +379,68 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 
 	while (_fgets(buf, BUF_SIZE, stream) != NULL)
 	{
-		if (*n < strlen(*lineptr) + BUF_SIZE)
-		{
+		if (*n < strlen(*lineptr) + strlen(buf))
+		{	
 			*n *= 2;
 			*lineptr = (char*)realloc(*lineptr, *n * sizeof(char));
 			assert(lineptr);
 			assert(*lineptr); // :(
 		}
 
-		strcat(*lineptr, buf);
+		printf("line: %s\nsizeof(buf): %d\nbuf:  %s\n", *lineptr, strlen(buf), buf);
+
+		strcat(*lineptr, buf); //123456789012345678901234567890
 
 		if ((*lineptr)[strlen(*lineptr) - 1] == '\n')
 		{
 			return strlen(*lineptr);
 		}
+	}*/
+
+	assert(lineptr);
+	assert(n);
+
+	int c = 0;
+	ssize_t size = 0;
+
+	if (*n == 0 && *lineptr != NULL)
+	{
+		fprintf(stderr, "hi\n");
+		return -1;
 	}
 
-	return -1;
+	if (*n == 0 && *lineptr == NULL)
+	{
+		*n = BUF_SIZE;
+		*lineptr = (char*)calloc(*n, sizeof(char));
+	}
+
+	assert(*lineptr);
+
+	fscanf(stream, "%c", &c);
+
+	if (c == EOF)
+		return -1;
+
+	size = 0;
+
+	while (c != EOF)
+	{
+		if (size + 1 >= *n)
+		{
+			*n *= 2;
+			*lineptr = (char*)realloc(*lineptr, *n * sizeof(char));
+			assert(*lineptr);
+		}
+
+		(*lineptr)[size++] = c;
+
+		if (c == '\n')
+			break;
+
+		fscanf(stream, "%c", &c);
+	}
+
+	(*lineptr)[size] = '\0';
+	return size;
 }
