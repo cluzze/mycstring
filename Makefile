@@ -15,14 +15,11 @@ CFLAGS=-D _DEBUG -ggdb3 -std=c++17 -O0 -Wall -Wextra -Weffc++ -Waggressive-loop-
 main.o: main.cpp
 	$(CC) $(CFLAGS) -c $^
 
-cstring.o: cstring.h cstring.cpp
+cstring.o: cstring.h cstring.cpp myassert.h
 	$(CC) $(CFLAGS) -c $^
 
 myapp: main.o cstring.o
-	$(CC) $(CFLAGS) -o $@ $^ -lm
-
-getline: getline.c
 	$(CC) $(CFLAGS) -o $@ $^
 
 clean:
-	rm myapp getline *.o *.gch
+	rm myapp *.o *.gch

@@ -1,6 +1,6 @@
 #include "cstring.h"
 
-#include <assert.h>
+#include "myassert.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -9,8 +9,8 @@
 
 void *memcpy(void *dest, const void *src, size_t n)
 {
-	assert(dest);
-	assert(src);
+	MYASSERT(dest)
+	MYASSERT(src)
 
 	char* d       = (char*)dest;
 	const char* s = (const char*)src;
@@ -23,8 +23,8 @@ void *memcpy(void *dest, const void *src, size_t n)
 
 void *memmove(void *dest, const void *src, size_t n)
 {
-	assert(dest);
-	assert(src);
+	MYASSERT(dest)
+	MYASSERT(src)
 
 	char* d       = (char*)dest;
 	const char* s = (const char*)src;
@@ -46,6 +46,8 @@ void *memmove(void *dest, const void *src, size_t n)
 
 void *memchr(const void *s, char c, size_t n)
 {
+	MYASSERT(s)
+
 	unsigned char* ls = (unsigned char*)s;
 	size_t i          = 0;
 
@@ -58,6 +60,9 @@ void *memchr(const void *s, char c, size_t n)
 
 int memcmp(const void *s1, const void *s2, size_t n)
 {
+	MYASSERT(s1)
+	MYASSERT(s2)
+
 	const char* ls1 = (const char*)s1;
 	const char* ls2 = (const char*)s2;
 
@@ -76,6 +81,8 @@ int memcmp(const void *s1, const void *s2, size_t n)
 
 void *memset(void *s, int c, size_t n)
 {
+	MYASSERT(s)
+
 	unsigned char* ls = (unsigned char*)s;
 	
 	while (n--)
@@ -88,8 +95,8 @@ void *memset(void *s, int c, size_t n)
 
 char *strcat(char *dest, const char *src)
 {
-	assert(dest);
-	assert(src);
+	MYASSERT(dest)
+	MYASSERT(src)
 
 	strcpy(dest + strlen(dest), src);
 
@@ -98,6 +105,9 @@ char *strcat(char *dest, const char *src)
 
 char *strncat(char *dest, const char *src, size_t n)
 {
+	MYASSERT(dest)
+	MYASSERT(src)
+
 	size_t i = 0;
 	size_t j = 0;
 
@@ -116,6 +126,8 @@ char *strncat(char *dest, const char *src, size_t n)
 
 char *strchr(const char *s, int c)
 {
+	MYASSERT(s)
+
 	size_t i = 0;
 
 	for (i = 0; s[i] != '\0'; ++i)
@@ -127,6 +139,8 @@ char *strchr(const char *s, int c)
 
 char *strrchr(const char *s, int c)
 {
+	MYASSERT(s)
+
 	size_t i  = 0;
 	char *res = NULL;
 
@@ -139,6 +153,9 @@ char *strrchr(const char *s, int c)
 
 int strcmp(const char *s1, const char *s2)
 {
+	MYASSERT(s1)
+	MYASSERT(s2)
+
 	size_t i = 0;
 
 	for (i = 0; s1[i] != '\0' && s2[i] != '\0'; ++i)
@@ -152,10 +169,15 @@ int strcmp(const char *s1, const char *s2)
 	if (s1[i] == '\0' && s2[i] == '\0') return 0;
 	if (s1[i] == '\0')					return -1;
 	if (s2[i] == '\0')					return 1;
+
+	return 0;
 }
 
 int strncmp(const char *s1, const char *s2, size_t n)
 {
+	MYASSERT(s1)
+	MYASSERT(s2)
+
 	size_t i = 0;
 
 	for (i = 0; i < n && s1[i] != '\0' && s2[i] != '\0'; ++i)
@@ -169,10 +191,15 @@ int strncmp(const char *s1, const char *s2, size_t n)
 	if (s1[i] == '\0' && s2[i] == '\0') return 0;
 	if (s1[i] == '\0')					return -1;
 	if (s2[i] == '\0')					return 1;
+
+	return 0;
 }
 
 char *strcpy(char *dest, const char *src)
 {
+	MYASSERT(dest)
+	MYASSERT(src)
+
 	char *res = dest;
 
 	while(*dest++ = *src++)
@@ -183,6 +210,9 @@ char *strcpy(char *dest, const char *src)
 
 char *strncpy(char *dest, const char *src, size_t n)
 {
+	MYASSERT(dest)
+	MYASSERT(src)
+
 	char *res = dest;
 
 	do
@@ -199,6 +229,8 @@ char *strncpy(char *dest, const char *src, size_t n)
 
 size_t strlen(const char *src)
 {
+	MYASSERT(src)
+
 	size_t i = 0;
 
 	for (i = 0; src[i] != '\0'; ++i)
@@ -209,6 +241,9 @@ size_t strlen(const char *src)
 
 size_t strspn(const char *s, const char *accept)
 {
+	MYASSERT(s)
+	MYASSERT(accept)
+
 	size_t i = 0;
 
 	int    table[TABLE_SIZE] = {0};
@@ -229,6 +264,9 @@ size_t strspn(const char *s, const char *accept)
 
 size_t strcspn(const char *s, const char *reject)
 {
+	MYASSERT(s)
+	MYASSERT(reject)
+
 	size_t i = 0;
 
 	int    table[TABLE_SIZE] = {0};
@@ -249,6 +287,9 @@ size_t strcspn(const char *s, const char *reject)
 
 char *strpbrk(const char *s, const char *accept)
 {
+	MYASSERT(s)
+	MYASSERT(accept)
+
 	size_t i = 0;
 
 	int    table[TABLE_SIZE] = {0};
@@ -269,6 +310,9 @@ char *strpbrk(const char *s, const char *accept)
 
 char *strstr(const char *haystack, const char *needle)
 {
+	MYASSERT(haystack)
+	MYASSERT(needle)
+
 	size_t i = 0;
 	size_t j = 0;
 	size_t k = 0;
@@ -293,6 +337,8 @@ char *strstr(const char *haystack, const char *needle)
 
 char *strtok(char *str, const char *delim)
 {
+	MYASSERT(delim)
+
 	static char *begin = NULL;
 	char *start_delim  = NULL;
 	char *end_delim    = NULL;
@@ -319,6 +365,8 @@ char *strtok(char *str, const char *delim)
 
 char *strdup(char *s)
 {
+	MYASSERT(s)
+
 	size_t size = strlen(s) + 1;
 
 	char *dups = (char*)calloc(strlen(s) + 1, sizeof(char));
@@ -330,6 +378,8 @@ char *strdup(char *s)
 
 char *_fgets(char *s, int size, FILE *stream)
 {
+	MYASSERT(s)
+
 	int c     = 0;
 	char *str = NULL;
 
@@ -352,6 +402,8 @@ char *_fgets(char *s, int size, FILE *stream)
 
 int _fputs(const char *s, FILE *stream)
 {
+	MYASSERT(s)
+
 	int c = 0;
 
 	while (c = *s++)
@@ -363,42 +415,8 @@ int _fputs(const char *s, FILE *stream)
 
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 {
-	//assert(n);
-
-	/*char buf[BUF_SIZE] = {'\0'};
-
-	if (!*lineptr)
-	{
-		*n = BUF_SIZE;
-		*lineptr = (char*)calloc(*n, sizeof(char));
-	}
-
-	assert(*lineptr);
-
-	**lineptr = '\0';
-
-	while (_fgets(buf, BUF_SIZE, stream) != NULL)
-	{
-		if (*n < strlen(*lineptr) + strlen(buf))
-		{	
-			*n *= 2;
-			*lineptr = (char*)realloc(*lineptr, *n * sizeof(char));
-			assert(lineptr);
-			assert(*lineptr); // :(
-		}
-
-		printf("line: %s\nsizeof(buf): %d\nbuf:  %s\n", *lineptr, strlen(buf), buf);
-
-		strcat(*lineptr, buf); //123456789012345678901234567890
-
-		if ((*lineptr)[strlen(*lineptr) - 1] == '\n')
-		{
-			return strlen(*lineptr);
-		}
-	}*/
-
-	assert(lineptr);
-	assert(n);
+	MYASSERT(lineptr);
+	MYASSERT(n);
 
 	int c = 0;
 	ssize_t size = 0;
@@ -415,7 +433,7 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 		*lineptr = (char*)calloc(*n, sizeof(char));
 	}
 
-	assert(*lineptr);
+	MYASSERT(*lineptr);
 
 	fscanf(stream, "%c", &c);
 
@@ -430,7 +448,7 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 		{
 			*n *= 2;
 			*lineptr = (char*)realloc(*lineptr, *n * sizeof(char));
-			assert(*lineptr);
+			MYASSERT(*lineptr);
 		}
 
 		(*lineptr)[size++] = c;

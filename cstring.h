@@ -12,7 +12,7 @@ void *memchr(const void *s, char c, size_t n);
 
 int memcmp(const void *s1, const void *s2, size_t n);
 
-void *memset(void *s, int c, size_t n); // ??????????????????
+void *memset(void *s, int c, size_t n);
 
 char *strcat(char *dest, const char *src);
 
@@ -26,13 +26,9 @@ int strcmp(const char *s1, const char *s2);
 
 int strncmp(const char *s1, const char *s2, size_t n);
 
-//int strcoll(const char *, const char *);
-
 char *strcpy(char *dest, const char *src);
 
 char *strncpy(char *dest, const char *src, size_t n);
-
-//char *strerror(int);
 
 size_t strlen(const char *src);
 
@@ -44,7 +40,7 @@ char *strpbrk(const char *s, const char *accept);
 
 char *strstr(const char *haystack, const char *needle);
 
-char *strtok(char *str, const char *delim); //?????
+char *strtok(char *str, const char *delim);
 
 char *strdup(char *s);
 

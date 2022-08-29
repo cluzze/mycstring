@@ -14,7 +14,7 @@ int main()
 	ssize_t read = 0;
 	char *line = (char*)calloc(SIZE, sizeof(char));
 	read = _getline(&line, &size, stdin);
-	printf("read: %ld, line: %s\n", read, line);
+	printf("read: %ld, line:\n%s\n", read, line);
 
 	free(line);
 	return 0;
